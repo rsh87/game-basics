@@ -18,13 +18,10 @@ const velocity = {
     gravitySpeed: 0
 }
 
-const jumpHeight = 200;
-
 let lastPos = 0;
 let falling = false;
 let jumping = false;
 let lastMoveWasRight = false;
-let jump = jumpHeight;
 
 const handleKeys = (e, keydown) => {
     switch(e.keyCode) {
@@ -48,8 +45,7 @@ const handleKeys = (e, keydown) => {
 handleKeyLogic = () => {
     const bottomLine = canvas.height - playerSettings.height;
     const isBottom = playerPosition.y >= bottomLine;
-    const isTop = playerPosition.y <= bottomLine - jump;
-    const isInAir = (jumping || falling);
+    const isTop = playerPosition.y <= playerSettings.height;
     const isInCollision = playerSettings.isInCollision;
     const collisionIsTop = playerSettings.isCollidingY;
     velocity.gravitySpeed = jumping ? velocity.gravitySpeed += velocity.gravity : falling ? velocity.gravitySpeed -= velocity.gravity : 0;
@@ -79,7 +75,4 @@ handleKeyLogic = () => {
     falling = lastPos < playerPosition.y;
     jumping = lastPos > playerPosition.y;
     lastPos = playerPosition.y;
-    jump = collisionIsTop ? jumpHeight + 100 : isBottom ? jump = jumpHeight : jump;
-
-
 }
